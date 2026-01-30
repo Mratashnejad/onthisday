@@ -20,9 +20,6 @@ export function Navbar() {
                 Sports History
               </p>
             </div>
-
-
-
           </div>
           {/* Search Bar */}
           <div className="flex items-center gap-4">

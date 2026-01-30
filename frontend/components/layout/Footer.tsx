@@ -13,7 +13,7 @@ export function Footer() {
           <div className="lg:col-span-5 space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 border-2 border-otd-blue rounded-xl flex items-center justify-center">
-                <span className="font-black text-lg text-otd-blue">O</span>
+                <span className="font-black text-lg text-otd-blue">LOGO</span>
               </div>
               <div>
                 <h3 className="font-black text-xl tracking-tight">
@@ -37,13 +37,6 @@ export function Footer() {
             <h4 className="text-xs font-black tracking-widest uppercase mb-6">
               دسترسی‌ها
             </h4>
-            <ul className="space-y-4 text-sm text-gray-600">
-              <li>تقویم کامل رویدادها</li>
-              <li>آرشیو بر اساس سال</li>
-              <li>تالار مشاهیر</li>
-              <li>ارسال اصلاحیه</li>
-              <li>همکاری با پروژه</li>
-            </ul>
           </div>
 
           {/* Newsletter */}
