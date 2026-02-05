@@ -23,7 +23,7 @@ public class EventParticipant
     public ParticipantRole Role { get; set; }
 
     // جزئیات عددی یا متنی (مثلاً: "21 امتیاز" یا "دقیقه 90")
-    public string PerformanceNote { get; set; }
+    public string? PerformanceNote { get; set; }
 
     // آیا این شرکت‌کننده نقش اصلی در تیتر واقعه دارد؟
     public bool IsPrimary { get; set; } 

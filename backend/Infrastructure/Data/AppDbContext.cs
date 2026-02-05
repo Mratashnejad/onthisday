@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using OnThisDay.Api.Domain.Entities;
+using OnThisDay.Api.Infrastructure.Data.Conventions;
 
 
 namespace OnThisDay.Api.Infrastructure.Data;
@@ -18,6 +19,9 @@ public sealed class OnThisDayDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        SnakeCaseNamingConvention.Apply(modelBuilder);
+
         modelBuilder.Entity<Sport>(entity =>
         {
             entity.HasKey(s => s.Id);
@@ -25,7 +29,5 @@ public sealed class OnThisDayDbContext : DbContext
                 .IsRequired()
                 .HasMaxLength(100);
         });
-
-
     }
 }

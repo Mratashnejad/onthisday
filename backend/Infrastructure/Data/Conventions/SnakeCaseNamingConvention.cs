@@ -11,7 +11,11 @@ public static class SnakeCaseNamingConvention
         foreach (var entity in modelBuilder.Model.GetEntityTypes()!)
         {
             //Table names
-            entity.SetTableName(ToSnakeCase(entity.GetTableName()!));
+            var tableName = entity.GetTableName();
+            if (tableName != null)
+            {
+                entity.SetTableName(ToSnakeCase(tableName));
+            }
 
             // Columns
             foreach (var property in entity.GetProperties())
@@ -22,21 +26,32 @@ public static class SnakeCaseNamingConvention
             //Keys 
             foreach (var key in entity.GetKeys())
             {
-                key.SetName(ToSnakeCase(key.GetName()!));
-
+                var keyName = key.GetName();
+                if (keyName != null)
+                {
+                    key.SetName(ToSnakeCase(keyName));
+                }
             }
 
             //Foregin Keyes
             foreach (var fk in entity.GetForeignKeys())
             {
-                fk.SetConstraintName(ToSnakeCase(fk.GetConstraintName()!));
+                var constraintName = fk.GetConstraintName();
+                if (constraintName != null)
+                {
+                    fk.SetConstraintName(ToSnakeCase(constraintName));
+                }
             }
 
             //indexes
 
             foreach (var index in entity.GetIndexes())
             {
-                index.SetDatabaseName(ToSnakeCase(index.GetDatabaseName()!));
+                var dbName = index.GetDatabaseName();
+                if (dbName != null)
+                {
+                    index.SetDatabaseName(ToSnakeCase(dbName));
+                }
             }
 
         }
