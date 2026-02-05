@@ -1,0 +1,16 @@
+type Sport {
+  id: ID!
+  name: String!
+}
+
+type SportEvent {
+  id: Id!
+  title: String!
+  date: DateTime!
+  sport: sport!
+}
+
+type Query {
+  sportEvents: [SportEvent!]!
+  sportEvent(id: ID!): SportEvent!
+}

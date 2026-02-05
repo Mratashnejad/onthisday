@@ -3,8 +3,6 @@ using OnThisDay.Api.Domain.Entities;
 using OnThisDay.Api.Domain.Repositories;
 using OnThisDay.Api.Infrastructure.Data;
 
-
-
 namespace OnThisDay.Api.Infrastructure.Repositories;
 
 public class SportRepository : ISportRepository
@@ -16,44 +14,47 @@ public class SportRepository : ISportRepository
         _db = db;
     }
 
-    public async Task<IReadOnlyList<Sport>> GetAllAsync(CancellationToken ct)
+    public async Task<IEnumerable<Sport>> GetAllAsync()
     {
         return await _db.Sports
             .AsNoTracking()
             .OrderBy(s => s.Name)
-            .ToListAsync(ct);
+            .ToListAsync();
     }
 
-    public async Task<Sport?> GetByIdAsync(Guid id, CancellationToken ct)
+    public async Task<Sport?> GetByIdAsync(int id)
     {
         return await _db.Sports
             .AsNoTracking()
-            .FirstOrDefaultAsync(s => s.Id == id, ct);
+            .FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public async Task<Sport?> GetBySlugAsync(string slug, CancellationToken ct)
+    public async Task<Sport?> GetBySlugAsync(string slug)
     {
         return await _db.Sports
             .AsNoTracking()
-            .FirstOrDefaultAsync(s => s.Slug == slug, ct);
+            .FirstOrDefaultAsync(s => s.Slug == slug);
     }
 
-    public async Task<Sport> AddAsync(Sport sport, CancellationToken ct)
+    public async Task AddAsync(Sport sport)
     {
-        await _db.Sports.AddAsync(sport, ct);
-        await _db.SaveChangesAsync(ct);
-        return sport;
+        await _db.Sports.AddAsync(sport);
     }
 
-    public async Task UpdateAsync(Sport sport, CancellationToken ct)
+    public Task UpdateAsync(Sport sport)
     {
         _db.Sports.Update(sport);
-        await _db.SaveChangesAsync(ct);
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Sport sport, CancellationToken ct)
+    public Task DeleteAsync(Sport sport)
     {
         _db.Sports.Remove(sport);
-        await _db.SaveChangesAsync(ct);
+        return Task.CompletedTask;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _db.SaveChangesAsync();
     }
 }

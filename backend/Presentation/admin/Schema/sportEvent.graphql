@@ -1,0 +1,8 @@
+extend type mutation{
+    create sportEvent(
+        title : String!,
+        date : DateTime!,
+        sportId : ID!
+    ) : SportEvent!
+    deleteSportEvent(id : ID!) : Boolean!
+}
