@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using OnThisDay.Api.Domain.Entities;
 using OnThisDay.Api.Application.Services;
+using OnThisDay.Api.Domain.Utilities;
 
 namespace OnThisDay.Api.Presentation.Admin.Resolvers;
 
@@ -20,9 +21,11 @@ public class SportEventMutation
         int sportId
     )
     {
+
         var entity = new SportEvent
         {
             Headline = title,
+            Slug = SlugGenerator.Generate(title, date),
             Year = date.Year,
             Month = date.Month,
             Day = date.Day,
