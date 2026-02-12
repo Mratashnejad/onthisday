@@ -28,7 +28,7 @@ builder.Services.AddDbContext<OnThisDayDbContext>(options =>
 builder.Services.AddScoped<ISportRepository, SportRepository>();
 builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
 builder.Services.AddScoped<ISportEventService , SportEventService>();
-
+builder.Services.AddScoped<IPersonRepository , PersonRepository>();
 //Graphql 
 builder.Services
     .AddGraphQLServer()
