@@ -20,6 +20,15 @@ NEXT_PUBLIC_GRAPHQL_ENDPOINT=http://localhost:5195/graphql
 
 `GRAPHQL_ENDPOINT` is preferred for server-rendered queries.
 In production, at least one of these variables must be set.
+In development, if backend is unavailable, public pages fall back to local mock data.
+
+Optional env:
+
+```bash
+USE_MOCK_DATA=true
+```
+
+Set `USE_MOCK_DATA=false` if you want to force real backend responses during local development.
 
 ## 3) Generate GraphQL types
 
@@ -48,6 +57,23 @@ yarn frontend:dev
 ```bash
 yarn build
 ```
+
+## Run Backend Locally (for real data)
+
+From repository root:
+
+```bash
+yarn db:up
+dotnet run --project backend/OnThisDay.Api.csproj
+```
+
+GraphQL endpoint will be available at:
+
+```text
+http://localhost:5195/graphql
+```
+
+Database migrations and seed data run automatically on backend startup.
 
 ## Deploy On Vercel
 

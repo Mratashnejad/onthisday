@@ -1,5 +1,6 @@
 import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
+import { getMockGraphqlData } from "@/lib/mock-data";
 
 type GraphQlError = {
   message: string;
@@ -12,6 +13,10 @@ type GraphQlResponse<TResult> = {
 
 const DEFAULT_GRAPHQL_ENDPOINT = "http://localhost:5195/graphql";
 
+function shouldUseMockData(): boolean {
+  return process.env.USE_MOCK_DATA === "true" || process.env.NODE_ENV !== "production";
+}
+
 function getGraphqlEndpoint(): string {
   const endpoint = process.env.GRAPHQL_ENDPOINT ?? process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT;
 
@@ -19,7 +24,7 @@ function getGraphqlEndpoint(): string {
     return endpoint;
   }
 
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== "production" || shouldUseMockData()) {
     return DEFAULT_GRAPHQL_ENDPOINT;
   }
 
@@ -46,30 +51,47 @@ export async function executeGraphql<TResult, TVariables>(
     headers.authorization = `Bearer ${options.accessToken}`;
   }
 
-  const response = await fetch(getGraphqlEndpoint(), {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      query: print(document),
+  try {
+    const response = await fetch(getGraphqlEndpoint(), {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        query: print(document),
+        variables,
+      }),
+      cache: options?.cache ?? "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error(`GraphQL request failed with status ${response.status}.`);
+    }
+
+    const payload = (await response.json()) as GraphQlResponse<TResult>;
+
+    if (payload.errors?.length) {
+      const message = payload.errors.map((error) => error.message).join("; ");
+      throw new Error(message);
+    }
+
+    if (!payload.data) {
+      throw new Error("GraphQL response did not include data.");
+    }
+
+    return payload.data;
+  } catch (error) {
+    if (!shouldUseMockData()) {
+      throw error;
+    }
+
+    const mockData = getMockGraphqlData(
+      document as TypedDocumentNode<unknown, unknown>,
       variables,
-    }),
-    cache: options?.cache ?? "no-store",
-  });
+    );
+    if (mockData) {
+      console.warn("GraphQL request failed, using local mock data fallback.");
+      return mockData as TResult;
+    }
 
-  if (!response.ok) {
-    throw new Error(`GraphQL request failed with status ${response.status}.`);
+    throw error;
   }
-
-  const payload = (await response.json()) as GraphQlResponse<TResult>;
-
-  if (payload.errors?.length) {
-    const message = payload.errors.map((error) => error.message).join("; ");
-    throw new Error(message);
-  }
-
-  if (!payload.data) {
-    throw new Error("GraphQL response did not include data.");
-  }
-
-  return payload.data;
 }
