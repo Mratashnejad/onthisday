@@ -3,6 +3,10 @@ namespace OnThisDay.Api.Domain.Repositories;
 
 public interface ISportEventRepository : IGenericRepository<SportEvent>
 {
-    Task<IEnumerable<SportEvent>> GetEventsByDateAsync(int day, int month, CancellationToken ct);
+    Task<IEnumerable<SportEvent>> GetEventsByDateAsync(
+        int day,
+        int month,
+        string? sportSlug,
+        CancellationToken ct
+    );
 }
-

@@ -19,6 +19,14 @@ public class SportEventService : ISportEventService
     public Task<SportEvent?> GetByIdAsync(int id)
         => _repo.GetByIdAsync(id);
 
+    public Task<IEnumerable<SportEvent>> GetByDateAsync(
+        int day,
+        int month,
+        string? sportSlug,
+        CancellationToken ct = default
+    )
+        => _repo.GetEventsByDateAsync(day, month, sportSlug, ct);
+
     // Commands
     public async Task<SportEvent> AddAsync(SportEvent entity)
     {

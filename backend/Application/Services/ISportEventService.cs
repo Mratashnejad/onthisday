@@ -9,6 +9,12 @@ public interface ISportEventService
     // Queries
     Task<IEnumerable<SportEvent>> GetAll();
     Task<SportEvent?> GetByIdAsync(int id);
+    Task<IEnumerable<SportEvent>> GetByDateAsync(
+        int day,
+        int month,
+        string? sportSlug,
+        CancellationToken ct = default
+    );
 
     // Commands
     Task<SportEvent> AddAsync(SportEvent entity);

@@ -1,0 +1,138 @@
+@import "nprogress/nprogress.css";
+/* =========================================
+   1. TYPOGRAPHY (Yekan Bakh)
+   ========================================= */
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("/fonts/YekanBakh-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("/fonts/YekanBakh-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("/fonts/YekanBakh-Bold.woff2") format("woff2");
+  font-weight: 900;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================
+   2. THEME TOKENS (Mind-Blowing Palette)
+   ========================================= */
+:root {
+  --nav-h: 72px;
+  --mobile-nav-h: 60px;
+
+  /* Light Backgrounds */
+  --bg-app: #f5f7fa;
+  --bg-panel: #ffffff;
+  --bg-panel-hover: #f0f2f5;
+
+  /* Text */
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+
+  /* Borders */
+  --border-subtle: #e5e7eb;
+
+  /* Accent */
+  --accent-primary: #2563eb;
+
+  --font-primary: "Yekan Bakh", Tahoma, sans-serif;
+}
+
+/* =========================================
+   3. BASE & RESETS
+   ========================================= */
+* {
+  box-sizing: border-box;
+}
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--text-secondary);
+  background-color: var(--bg-app);
+  font-family: var(--font-primary) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================
+   4. COMPONENTS (Inspired by AI Outlines)
+   ========================================= */
+@layer components {
+  /* کانتینر ریسپانسیو با در نظر گرفتن Notch گوشی‌ها */
+  .container-fluid {
+    @apply max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12;
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* کارت‌های شیشه‌ای نسل جدید (ترکیب Glassmorphism و Animated Border) */
+  .card-nexus {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  /* =========================================
+   5. BUTTONS (Epic Interactive States)
+   ========================================= */
+  .btn-epic {
+    @apply inline-flex items-center justify-center gap-2 font-medium;
+    min-height: 42px;
+    padding: 0 1.25rem;
+    border-radius: 0.75rem;
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    transition: background 0.2s ease;
+  }
+
+  .btn-epic:hover {
+    background: #1d4ed8;
+  }
+
+  /* ربان یا تگ طلایی لوکس */
+  .tag-gold {
+    @apply inline-flex items-center px-3 py-1 text-xs font-bold rounded-full;
+    background: linear-gradient(135deg, var(--accent-gold-light) 0%, var(--accent-gold) 100%);
+    color: #0b0f1a;
+    box-shadow: 0 4px 15px rgba(206, 159, 68, 0.4);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+  }
+
+  /* =========================================
+   6. TYPOGRAPHY UTILS
+   ========================================= */
+  .text-glow {
+    background: linear-gradient(to right, var(--text-primary), #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+  }
+
+  .text-gradient-cyber {
+    background: linear-gradient(90deg, var(--accent-cyan) 0%, var(--accent-purple) 50%, var(--accent-pink) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 4s linear infinite;
+  }
+}

@@ -1,0 +1,494 @@
+mutation AdminLogin($usernameOrEmail: String!, $password: String!) {
+  loginAdmin(usernameOrEmail: $usernameOrEmail, password: $password) {
+    accessToken
+    expiresAtUtc
+    userId
+    username
+    email
+  }
+}
+
+query AdminDashboardData {
+  adminSports {
+    id
+    name
+    slug
+    type
+    description
+    iconUrl
+  }
+  adminLocations {
+    id
+    name
+    slug
+    city
+    country
+    description
+  }
+  adminCompetitions {
+    id
+    name
+    slug
+    shortName
+    level
+    description
+    logoUrl
+    sportId
+    sport {
+      id
+      name
+    }
+  }
+  adminTeams {
+    id
+    name
+    slug
+    foundedYear
+    description
+    iconUrl
+    websiteUrl
+    sport {
+      id
+      name
+    }
+    location {
+      id
+      name
+    }
+  }
+  adminPersons {
+    id
+    firstname
+    lastname
+    slug
+    title
+    nationality
+    birthDate
+    deathDate
+    biography
+    profileImageUrl
+    gender
+    status
+    sports {
+      id
+      name
+    }
+    teams {
+      id
+      name
+    }
+  }
+  adminSportEvents {
+    id
+    headline
+    slug
+    year
+    month
+    day
+    type
+    fullDescription
+    sportId
+    competitionId
+    locationId
+    mediaUrl
+    sport {
+      id
+      name
+    }
+    competition {
+      id
+      name
+    }
+    location {
+      id
+      name
+    }
+  }
+}
+
+mutation AdminCreateSport(
+  $name: String!
+  $type: SportType!
+  $slug: String
+  $description: String
+  $iconUrl: String
+) {
+  createSport(
+    name: $name
+    type: $type
+    slug: $slug
+    description: $description
+    iconUrl: $iconUrl
+  ) {
+    id
+    name
+    slug
+    type
+  }
+}
+
+mutation AdminUpdateSport(
+  $id: Int!
+  $name: String!
+  $type: SportType!
+  $slug: String
+  $description: String
+  $iconUrl: String
+) {
+  updateSport(
+    id: $id
+    name: $name
+    type: $type
+    slug: $slug
+    description: $description
+    iconUrl: $iconUrl
+  ) {
+    id
+    name
+    slug
+    type
+  }
+}
+
+mutation AdminDeleteSport($id: Int!) {
+  deleteSport(id: $id)
+}
+
+mutation AdminCreateLocation(
+  $name: String!
+  $slug: String
+  $city: String
+  $country: String
+  $description: String
+) {
+  createLocation(
+    name: $name
+    slug: $slug
+    city: $city
+    country: $country
+    description: $description
+  ) {
+    id
+    name
+    slug
+  }
+}
+
+mutation AdminUpdateLocation(
+  $id: Int!
+  $name: String!
+  $slug: String
+  $city: String
+  $country: String
+  $description: String
+) {
+  updateLocation(
+    id: $id
+    name: $name
+    slug: $slug
+    city: $city
+    country: $country
+    description: $description
+  ) {
+    id
+    name
+    slug
+    city
+    country
+    description
+  }
+}
+
+mutation AdminDeleteLocation($id: Int!) {
+  deleteLocation(id: $id)
+}
+
+mutation AdminCreateCompetition(
+  $name: String!
+  $sportId: Int!
+  $level: CompetitionLevel!
+  $shortName: String
+  $slug: String
+  $description: String
+  $logoUrl: String
+) {
+  createCompetition(
+    name: $name
+    sportId: $sportId
+    level: $level
+    shortName: $shortName
+    slug: $slug
+    description: $description
+    logoUrl: $logoUrl
+  ) {
+    id
+    name
+    slug
+    level
+  }
+}
+
+mutation AdminUpdateCompetition(
+  $id: Int!
+  $name: String!
+  $sportId: Int!
+  $level: CompetitionLevel!
+  $shortName: String
+  $slug: String
+  $description: String
+  $logoUrl: String
+) {
+  updateCompetition(
+    id: $id
+    name: $name
+    sportId: $sportId
+    level: $level
+    shortName: $shortName
+    slug: $slug
+    description: $description
+    logoUrl: $logoUrl
+  ) {
+    id
+    name
+    slug
+    shortName
+    level
+    sport {
+      id
+      name
+    }
+  }
+}
+
+mutation AdminDeleteCompetition($id: Int!) {
+  deleteCompetition(id: $id)
+}
+
+mutation AdminCreateTeam(
+  $name: String!
+  $foundedYear: Int!
+  $slug: String
+  $description: String
+  $iconUrl: String
+  $websiteUrl: String
+  $sportId: Int
+  $locationId: Int
+) {
+  createTeam(
+    name: $name
+    foundedYear: $foundedYear
+    slug: $slug
+    description: $description
+    iconUrl: $iconUrl
+    websiteUrl: $websiteUrl
+    sportId: $sportId
+    locationId: $locationId
+  ) {
+    id
+    name
+    slug
+  }
+}
+
+mutation AdminUpdateTeam(
+  $id: Int!
+  $name: String!
+  $foundedYear: Int!
+  $slug: String
+  $description: String
+  $iconUrl: String
+  $websiteUrl: String
+  $sportId: Int
+  $locationId: Int
+  $memberIds: [Int!]
+) {
+  updateTeam(
+    id: $id
+    name: $name
+    foundedYear: $foundedYear
+    slug: $slug
+    description: $description
+    iconUrl: $iconUrl
+    websiteUrl: $websiteUrl
+    sportId: $sportId
+    locationId: $locationId
+    memberIds: $memberIds
+  ) {
+    id
+    name
+    slug
+    foundedYear
+    sport {
+      id
+      name
+    }
+    location {
+      id
+      name
+    }
+  }
+}
+
+mutation AdminDeleteTeam($id: Int!) {
+  deleteTeam(id: $id)
+}
+
+mutation AdminCreatePerson(
+  $firstname: String!
+  $birthDate: DateTime!
+  $gender: Gender!
+  $status: PersonalStatus!
+  $slug: String
+  $lastname: String
+  $title: String
+  $nationality: String
+  $deathDate: DateTime
+  $biography: String
+  $profileImageUrl: String
+  $sportIds: [Int!]
+  $teamIds: [Int!]
+) {
+  createPerson(
+    firstname: $firstname
+    birthDate: $birthDate
+    gender: $gender
+    status: $status
+    slug: $slug
+    lastname: $lastname
+    title: $title
+    nationality: $nationality
+    deathDate: $deathDate
+    biography: $biography
+    profileImageUrl: $profileImageUrl
+    sportIds: $sportIds
+    teamIds: $teamIds
+  ) {
+    id
+    firstname
+    lastname
+    slug
+  }
+}
+
+mutation AdminUpdatePerson(
+  $id: Int!
+  $firstname: String!
+  $birthDate: DateTime!
+  $gender: Gender!
+  $status: PersonalStatus!
+  $slug: String
+  $lastname: String
+  $title: String
+  $nationality: String
+  $deathDate: DateTime
+  $biography: String
+  $profileImageUrl: String
+  $sportIds: [Int!]
+  $teamIds: [Int!]
+) {
+  updatePerson(
+    id: $id
+    firstname: $firstname
+    birthDate: $birthDate
+    gender: $gender
+    status: $status
+    slug: $slug
+    lastname: $lastname
+    title: $title
+    nationality: $nationality
+    deathDate: $deathDate
+    biography: $biography
+    profileImageUrl: $profileImageUrl
+    sportIds: $sportIds
+    teamIds: $teamIds
+  ) {
+    id
+    firstname
+    lastname
+    slug
+    nationality
+    status
+    gender
+  }
+}
+
+mutation AdminDeletePerson($id: Int!) {
+  deletePerson(id: $id)
+}
+
+mutation AdminCreateSportEvent(
+  $title: String!
+  $date: DateTime!
+  $sportId: Int!
+  $type: SportEventType!
+  $fullDescription: String
+  $competitionId: Int
+  $locationId: Int
+  $mediaUrl: String
+) {
+  createSportEvent(
+    title: $title
+    date: $date
+    sportId: $sportId
+    type: $type
+    fullDescription: $fullDescription
+    competitionId: $competitionId
+    locationId: $locationId
+    mediaUrl: $mediaUrl
+  ) {
+    id
+    headline
+    slug
+    year
+    month
+    day
+  }
+}
+
+mutation AdminUpdateSportEvent(
+  $id: Int!
+  $title: String!
+  $date: DateTime!
+  $sportId: Int!
+  $type: SportEventType!
+  $fullDescription: String
+  $competitionId: Int
+  $locationId: Int
+  $mediaUrl: String
+) {
+  updateSportEvent(
+    id: $id
+    title: $title
+    date: $date
+    sportId: $sportId
+    type: $type
+    fullDescription: $fullDescription
+    competitionId: $competitionId
+    locationId: $locationId
+    mediaUrl: $mediaUrl
+  ) {
+    id
+    headline
+    slug
+    year
+    month
+    day
+    type
+    sport {
+      id
+      name
+    }
+    competition {
+      id
+      name
+    }
+    location {
+      id
+      name
+    }
+  }
+}
+
+mutation AdminDeleteSportEvent($id: Int!) {
+  deleteSportEvent(id: $id)
+}

@@ -1,0 +1,48 @@
+query SportEventDetail($id: Int!) {
+  sportEvent(id: $id) {
+    id
+    slug
+    headline
+    fullDescription
+    day
+    month
+    year
+    type
+    mediaUrl
+    sport {
+      id
+      name
+      slug
+    }
+    competition {
+      id
+      name
+      slug
+      level
+    }
+    location {
+      id
+      name
+      city
+      country
+      slug
+    }
+    participants {
+      id
+      role
+      isPrimary
+      performanceNote
+      person {
+        id
+        firstname
+        lastname
+        slug
+      }
+      team {
+        id
+        name
+        slug
+      }
+    }
+  }
+}

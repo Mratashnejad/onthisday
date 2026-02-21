@@ -1,0 +1,26 @@
+query PersonsPage($status: PersonalStatus) {
+  persons(status: $status) {
+    id
+    firstname
+    lastname
+    slug
+    title
+    nationality
+    birthDate
+    deathDate
+    biography
+    profileImageUrl
+    gender
+    status
+    sports {
+      id
+      name
+      slug
+    }
+    teams {
+      id
+      name
+      slug
+    }
+  }
+}

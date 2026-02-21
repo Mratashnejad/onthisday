@@ -1,84 +1,115 @@
-"use client";
-import React from "react";
 import Link from "next/link";
+
 export function Footer() {
+  const navLinks = [
+    { name: "صفحه اصلی", href: "/" },
+    { name: "امروز", href: "/today" },
+    { name: "رویدادها", href: "/" },
+    { name: "تولدها", href: "/birthdays" },
+    { name: "درگذشتگان", href: "/deaths" },
+    { name: "افراد", href: "/persons" },
+    { name: "ورزش‌ها", href: "/sports" },
+  ];
+
+  const infoLinks = [
+    { name: "درباره پروژه", href: "/about" },
+    { name: "حریم خصوصی", href: "/privacy" },
+    { name: "شرایط استفاده", href: "/terms" },
+    { name: "ورود مدیریت", href: "/admin/login" },
+  ];
+
   return (
-    <footer dir="rtl" className="bg-white border-t border-gray-200 mt-24">
-      <div className="max-w-7xl mx-auto px-8 py-20">
+    <footer className="relative mt-24 overflow-hidden border-t border-white/10 bg-gradient-to-b from-[#0b1222] via-[#0d1628] to-[#090f1d]">
+      <div className="absolute left-1/2 top-0 h-px w-full max-w-6xl -translate-x-1/2 bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent" />
+      <div className="pointer-events-none absolute -top-32 left-1/2 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-brand-cyan/10 blur-[140px]" />
 
-        {/* Top */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-
-          {/* Brand */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 border-2 border-otd-blue rounded-xl flex items-center justify-center">
-                <span className="font-black text-lg text-otd-blue">LOGO</span>
-              </div>
-              <div>
-                <h3 className="font-black text-xl tracking-tight">
-                  ON THIS <span className="text-otd-yellow">DAY</span>
-                </h3>
-                <p className="text-[10px] uppercase tracking-[3px] text-gray-400">
-                  Sports History Archive
-                </p>
-              </div>
+      <div className="relative mx-auto max-w-7xl px-6 py-16 md:px-10">
+        <div className="mb-10 grid gap-5 rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:grid-cols-[1fr_auto] md:items-center">
+          <div>
+            <h3 className="display-fa text-2xl font-black text-white md:text-3xl">
+              تقویم رویدادهای ورزشی جهان
+            </h3>
+            <p className="mt-2 text-sm text-slate-300">
+              جست‌وجو در تاریخ، مرور رخدادها، زادروزها و درگذشتگان ورزش در نمایی یکپارچه و فارسی.
+            </p>
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-center text-xs">
+            <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-slate-200">
+              رویدادها
             </div>
-
-            <p className="text-gray-600 text-sm leading-relaxed max-w-md">
-              <strong>On This Day</strong> یک آرشیو مستقل از مهم‌ترین
-              لحظات تاریخ ورزش است؛ جایی برای ثبت رکوردها، تولد
-              اسطوره‌ها و رویدادهایی که مسیر ورزش جهان را تغییر داده‌اند.
-            </p>
-          </div>
-
-          {/* Links */}
-          <div className="lg:col-span-3">
-            <h4 className="text-xs font-black tracking-widest uppercase mb-6">
-              دسترسی‌ها
-            </h4>
-          </div>
-
-          {/* Newsletter */}
-          <div className="lg:col-span-4">
-            <h4 className="text-xs font-black tracking-widest uppercase mb-6">
-              خبرنامه
-            </h4>
-            <p className="text-sm text-gray-600 mb-6 leading-relaxed">
-              مهم‌ترین رویدادهای تاریخی ورزش را هر روز
-              به‌صورت خلاصه در ایمیل خود دریافت کنید.
-            </p>
-
-            <div className="flex border border-gray-300 rounded-full overflow-hidden">
-              <input
-                type="email"
-                placeholder="ایمیل شما"
-                className="flex-1 px-5 py-3 text-sm outline-none"
-              />
-              <button className="px-6 font-black text-sm border-r border-gray-300">
-                عضویت
-              </button>
+            <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-slate-200">
+              تولدها
+            </div>
+            <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-slate-200">
+              درگذشتگان
             </div>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-20 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-6 text-[11px] text-gray-500">
-          <p className="font-bold tracking-wide">
-            © 2026 ON THIS DAY · SPORTS HISTORY
-          </p>
-
-          <div className="flex gap-8 font-bold uppercase tracking-wider">
-            <Link href="/privacy" className="hover:text-otd-yellow transition-colors">
-              Privacy
-            </Link>
-            <Link href="/terms" className="hover:text-otd-yellow transition-colors">
-              Terms
-            </Link>
-            <Link href="/cookies" className="hover:text-otd-yellow transition-colors">
-              Cookies
-            </Link>
+        <div className="grid gap-10 md:grid-cols-3">
+          <div>
+            <h4 className="mb-4 text-xs font-black uppercase tracking-widest text-brand-gold">
+              ناوبری سریع
+            </h4>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              {navLinks.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-2 text-slate-300 transition hover:bg-white/[0.08] hover:text-white"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
           </div>
+
+          <div>
+            <h4 className="mb-4 text-xs font-black uppercase tracking-widest text-brand-gold">
+              دسته‌بندی‌ها
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {["فوتبال", "بسکتبال", "والیبال", "تنیس", "کشتی", "المپیک"].map((name) => (
+                <span
+                  key={name}
+                  className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-xs text-slate-300"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+
+            <p className="mt-4 text-sm leading-7 text-slate-400">
+              پایگاه داده این پروژه به‌صورت پیوسته با داده‌های جدید فارسی تکمیل می‌شود تا مرور تاریخ ورزش برای کاربران
+              فارسی‌زبان دقیق‌تر و سریع‌تر باشد.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="mb-4 text-xs font-black uppercase tracking-widest text-brand-gold">
+              اطلاعات و پشتیبانی
+            </h4>
+            <div className="flex flex-col gap-2 text-sm text-slate-300">
+              {infoLinks.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-2 transition hover:bg-white/[0.08] hover:text-white"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-5 rounded-2xl border border-brand-gold/30 bg-brand-gold/10 px-4 py-3 text-xs text-brand-paper">
+              برای ویرایش داده‌ها از بخش مدیریت استفاده کنید.
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-slate-500 md:flex-row">
+          <div>© ۲۰۲۶ «در این روز» — مرجع آنلاین تاریخ ورزش جهان</div>
+          <div className="text-slate-400">Today In Sports History | Persian Edition</div>
         </div>
       </div>
     </footer>

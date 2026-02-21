@@ -17,7 +17,13 @@ public sealed class SportEventRepository : ISportEventRepository
     // ===== IGenericRepository =====
 
     public async Task<IEnumerable<SportEvent>> GetAllAsync()
-        => await _db.SportEvents.AsNoTracking().ToListAsync();
+        => await _db.SportEvents
+            .AsNoTracking()
+            .Include(e => e.Sport)
+            .OrderBy(e => e.Month)
+            .ThenBy(e => e.Day)
+            .ThenBy(e => e.Year)
+            .ToListAsync();
 
     public async Task<SportEvent?> GetByIdAsync(int id)
         => await _db.SportEvents
@@ -47,12 +53,24 @@ public sealed class SportEventRepository : ISportEventRepository
     public async Task<IEnumerable<SportEvent>> GetEventsByDateAsync(
         int day,
         int month,
+        string? sportSlug,
         CancellationToken ct
     )
     {
-        return await _db.SportEvents
+        var query = _db.SportEvents
             .AsNoTracking()
-            .Where(e => e.Day == day && e.Month == month)
+            .Include(e => e.Sport)
+            .Where(e => e.Day == day && e.Month == month);
+
+        if (!string.IsNullOrWhiteSpace(sportSlug))
+        {
+            var normalizedSlug = sportSlug.Trim().ToLowerInvariant();
+            query = query.Where(e => e.Sport != null && e.Sport.Slug == normalizedSlug);
+        }
+
+        return await query
+            .OrderBy(e => e.Year)
+            .ThenBy(e => e.Id)
             .ToListAsync(ct);
     }
 }

@@ -1,0 +1,26 @@
+query SportEventsPage($day: Int!, $month: Int!, $sportSlug: String) {
+  sports {
+    id
+    name
+    slug
+    description
+    iconUrl
+    type
+  }
+  sportEvents(day: $day, month: $month, sportSlug: $sportSlug) {
+    id
+    slug
+    year
+    month
+    day
+    headline
+    fullDescription
+    mediaUrl
+    type
+    sport {
+      id
+      name
+      slug
+    }
+  }
+}
