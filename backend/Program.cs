@@ -13,12 +13,13 @@ using OnThisDay.Api.Presentation.Admin.Resolvers;
 using OnThisDay.Api.Presentation.Web.Resolvers;
 
 var builder = WebApplication.CreateBuilder(args);
+var allowedCorsOrigins = GetAllowedCorsOrigins(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Frontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins(allowedCorsOrigins)
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -102,3 +103,20 @@ await DataSeeder.SeedAsync(app.Services);
 app.MapGraphQL("/graphql");
 
 app.Run();
+
+static string[] GetAllowedCorsOrigins(IConfiguration configuration)
+{
+    var list = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+    if (list is { Length: > 0 })
+    {
+        return list;
+    }
+
+    var raw = configuration["Cors:AllowedOrigins"];
+    if (!string.IsNullOrWhiteSpace(raw))
+    {
+        return raw.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+    }
+
+    return new[] { "http://localhost:3000", "https://localhost:3000" };
+}

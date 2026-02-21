@@ -13,10 +13,18 @@ type GraphQlResponse<TResult> = {
 const DEFAULT_GRAPHQL_ENDPOINT = "http://localhost:5195/graphql";
 
 function getGraphqlEndpoint(): string {
-  return (
-    process.env.GRAPHQL_ENDPOINT ??
-    process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT ??
-    DEFAULT_GRAPHQL_ENDPOINT
+  const endpoint = process.env.GRAPHQL_ENDPOINT ?? process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT;
+
+  if (endpoint) {
+    return endpoint;
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    return DEFAULT_GRAPHQL_ENDPOINT;
+  }
+
+  throw new Error(
+    "GRAPHQL endpoint is missing. Set GRAPHQL_ENDPOINT or NEXT_PUBLIC_GRAPHQL_ENDPOINT in production.",
   );
 }
 

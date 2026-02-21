@@ -19,6 +19,7 @@ NEXT_PUBLIC_GRAPHQL_ENDPOINT=http://localhost:5195/graphql
 ```
 
 `GRAPHQL_ENDPOINT` is preferred for server-rendered queries.
+In production, at least one of these variables must be set.
 
 ## 3) Generate GraphQL types
 
@@ -47,6 +48,27 @@ yarn frontend:dev
 ```bash
 yarn build
 ```
+
+## Deploy On Vercel
+
+1) Import this repository in Vercel.
+
+2) Set **Root Directory** to:
+
+```text
+frontend
+```
+
+3) Set these environment variables in Vercel Project Settings:
+
+```text
+GRAPHQL_ENDPOINT=https://your-backend-domain.com/graphql
+NEXT_PUBLIC_GRAPHQL_ENDPOINT=https://your-backend-domain.com/graphql
+```
+
+4) Deploy.
+
+If your backend is hosted separately, make sure backend CORS allows your Vercel domain (for example: `https://your-project.vercel.app`).
 
 ## Admin Panel
 
